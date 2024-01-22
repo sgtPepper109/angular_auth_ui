@@ -18,18 +18,26 @@
               <tr>
                 <div id="login_form">
                   <form class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" name="email" [(ngModel)]="login_email_ngmodel" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="floatingInput" name="email"
+                      [(ngModel)]="login_email_ngmodel" placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
-                    <div id="emailErrorIndicator" class="form-text text-danger" [hidden]="!error_in_email">* Email address is invalid</div>
+                    <div id="emailErrorIndicator" class="form-text text-danger" [hidden]="!error_in_email">* Email
+                      address is invalid</div>
                   </form>
-                  <form class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" name="password" [(ngModel)]="login_password_ngmodel" placeholder="Password"/>
-                    <label for="floatingPassword">Password</label>
-                    <div id="passwordErrorIndicator" class="form-text text-danger" [hidden]="!error_in_password">* Password is invalid</div>
-                    <div id="passwordHelpBlock" class="form-text">
-                      Your password must be 6-10 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
-                    </div>
-                  </form>
+
+
+                  <div class="input-group">
+                    <form class="form-floating">
+                      <input type="{{password_visible? 'password': 'text'}}" class="form-control" id="floatingPassword"
+                        name="password" [(ngModel)]="login_password_ngmodel" placeholder="Password" />
+                      <label for="floatingPassword">Password</label>
+                    </form>
+                    <span type="button" (click)="toggle_password_visibility()" class="input-group-text">
+                      <mat-icon>{{password_visibility_switch_icon}}</mat-icon>
+                    </span>
+                  </div>
+                  <div id="passwordErrorIndicator" class="form-text text-danger" [hidden]="!error_in_password">* Password is invalid</div>
+
                 </div>
               </tr>
               <th>
@@ -52,10 +60,10 @@
               </tr>
               <tr>
                 <div class="text-center">
-                  <button mat-icon-button title="Google"><i class="fa fa-brands fa-google"></i></button>
-                  <button mat-icon-button title="Facebook/Meta"><i class="fa fa-brands fa-facebook"></i></button>
+                  <button mat-icon-button color="warn" title="Google"><i class="fa fa-brands fa-google"></i></button>
+                  <button mat-icon-button color="primary" title="Facebook/Meta"><i class="fa fa-brands fa-facebook"></i></button>
                   <button mat-icon-button title="GitHub"><i class="fa fa-brands fa-github"></i></button>
-                  <button mat-icon-button title="LinkedIn"><i class="fa fa-brands fa-linkedin"></i></button>
+                  <button mat-icon-button color="primary" title="LinkedIn"><i class="fa fa-brands fa-linkedin"></i></button>
                 </div>
               </tr>
             </tbody>
