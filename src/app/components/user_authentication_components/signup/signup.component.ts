@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { HelperService } from 'src/app/services/helper_service/helper-service.service';
+import { HelperService } from 'src/app/services/helper_service/helper.service';
 import { user_form_fields_interface } from 'src/app/interfaces/all_interfaces';
-import { FormGroup, FormControl } from "@angular/forms";
-import { Validators } from "@angular/forms";
+import { AuthenticationService } from 'src/app/services/authentication_service/authentication.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
@@ -10,15 +10,23 @@ import { Validators } from "@angular/forms";
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  signup_email_ngmodel: string = '';
-  signup_password_ngmodel: string = '';
-  error_in_email: boolean = false;
-  error_in_password: boolean = false;
   password_visible: boolean = false;
   password_visibility_switch_icon: string = 'visibility';
   signup_form = this.helper_service.authentication_details_form;
 
-  constructor(private helper_service: HelperService) { }
+  constructor(
+    private helper_service: HelperService,
+    private authentication_service: AuthenticationService
+  ) {}
+
+  get Email() {
+    return this.signup_form.get('Email');
+  }
+
+  get Password() {
+    return this.signup_form.get('Password');
+  }
+
 
   toggle_password_visibility() {
     if (this.password_visible) {
@@ -29,24 +37,20 @@ export class SignupComponent {
       this.password_visibility_switch_icon = 'visibility_off';
     }
   }
-
-  validate_signup_form(signup_form_data: user_form_fields_interface): void {
-    this.signup_form.patchValue(Object(signup_form_data));
-    if (this.signup_form.controls.Email.invalid) {
-      this.error_in_email = true;
-      this.helper_service.open_snack_bar('Invalid form details!');
-    } else this.error_in_email = false;
-    if (this.signup_form.controls.Password.invalid) {
-      this.error_in_password = true;
-      this.helper_service.open_snack_bar('Invalid form details!');
-    } else this.error_in_password = false;
-  }
-
   signup_form_submit(): void {
-    let signup_form_data: user_form_fields_interface = {
-      Email: this.signup_email_ngmodel,
-      Password: this.signup_password_ngmodel
+    if (this.helper_service.is_valid_form(this.signup_form)) {
+      this.authentication_service.authenticate_user(this.signup_form.value).subscribe({
+        next: (response) => { console.log('response, ', response); },
+        error: (error: HttpErrorResponse) => { console.log('error, ', error) },
+        complete: () => { console.log('completed, '); }
+      })
     }
-    this.validate_signup_form(signup_form_data);
+    // let signup_form_data: user_form_fields_interface = {
+    //   Email: this.signup_email_ngmodel,
+    //   Password: this.signup_password_ngmodel
+    // }
+    // if (this.valid_signup_form(signup_form_data)) {
+    //   this.authentication_service.signup_user(signup_form_data);
+    // }
   }
 }

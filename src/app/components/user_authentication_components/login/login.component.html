@@ -17,33 +17,32 @@
             <tbody>
               <tr>
                 <div id="login_form">
-                  <form class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" name="email"
-                      [(ngModel)]="login_email_ngmodel" placeholder="name@example.com">
+                  <form [formGroup]="login_form" class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" name="email" formControlName="Email" placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
-                    <div id="emailErrorIndicator" class="form-text text-danger" [hidden]="!error_in_email">* Email
-                      address is invalid</div>
+                    <div id="emailErrorIndicator" class="form-text text-danger" *ngIf="Email?.touched && Email?.invalid">* Email address is invalid</div>
+                    <div id="emailInstructionIndicator" class="form-text text-secondary" *ngIf="Email?.untouched">Enter your registered Email address</div>
                   </form>
 
 
                   <div class="input-group">
-                    <form class="form-floating">
-                      <input type="{{password_visible? 'password': 'text'}}" class="form-control" id="floatingPassword"
-                        name="password" [(ngModel)]="login_password_ngmodel" placeholder="Password" />
+                    <form [formGroup]="login_form" class="form-floating">
+                      <input type="{{password_visible? 'text': 'password'}}" class="form-control" id="floatingPassword" name="Password" formControlName="Password" placeholder="Password" />
                       <label for="floatingPassword">Password</label>
                     </form>
                     <span type="button" (click)="toggle_password_visibility()" class="input-group-text">
                       <mat-icon>{{password_visibility_switch_icon}}</mat-icon>
                     </span>
                   </div>
-                  <div id="passwordErrorIndicator" class="form-text text-danger" [hidden]="!error_in_password">* Password is invalid</div>
+                  <div id="passwordErrorIndicator" class="form-text text-danger" *ngIf="Password?.touched && Password?.invalid">* Password is invalid</div>
+                  <div id="passwordInstructionIndicator" class="form-text text-secondary" *ngIf="Password?.untouched">Enter your Password</div>
 
                 </div>
               </tr>
               <th>
-                <div id="login_form_submitter" class="text-center">
-                  <button mat-raised-button color="primary" type="button" (click)="login_form_submit()">Submit</button>
-                </div>
+                <form [formGroup]="login_form" (ngSubmit)="login_form_submit()" id="login_form_submitter" class="text-center">
+                  <button mat-raised-button color="primary" type="submit">Submit</button>
+                </form>
               </th>
               <tr>
                 <div id="forgot_password_indicator" class="text-center">

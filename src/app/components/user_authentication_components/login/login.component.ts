@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { HelperService } from 'src/app/services/helper_service/helper-service.service';
+import { HelperService } from 'src/app/services/helper_service/helper.service';
 import { user_form_fields_interface } from 'src/app/interfaces/all_interfaces';
-import { FormGroup, FormControl } from "@angular/forms";
-import { Validators } from "@angular/forms";
+import { AuthenticationService } from 'src/app/services/authentication_service/authentication.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -10,15 +10,22 @@ import { Validators } from "@angular/forms";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  login_email_ngmodel: string = '';
-  login_password_ngmodel: string = '';
-  error_in_email: boolean = false;
-  error_in_password: boolean = false;
-  password_visible: boolean = true;
+  password_visible: boolean = false;
   password_visibility_switch_icon: string = 'visibility';
   login_form = this.helper_service.authentication_details_form;
 
-  constructor(private helper_service: HelperService) { }
+  constructor(
+    private helper_service: HelperService,
+    private authentication_service: AuthenticationService,
+  ) {}
+
+  get Email() {
+    return this.login_form.get('Email');
+  }
+
+  get Password() {
+    return this.login_form.get('Password');
+  }
 
   toggle_password_visibility() {
     if (this.password_visible) {
@@ -30,23 +37,14 @@ export class LoginComponent {
     }
   }
 
-  validate_login_form(login_form_data: user_form_fields_interface): void {
-    this.login_form.patchValue(Object(login_form_data));
-    if (this.login_form.controls.Email.invalid) {
-      this.error_in_email = true;
-      this.helper_service.open_snack_bar('Invalid form details!');
-    } else this.error_in_email = false;
-    if (this.login_form.controls.Password.invalid) {
-      this.error_in_password = true;
-      this.helper_service.open_snack_bar('Invalid form details!');
-    } else this.error_in_password = false;
+  login_form_submit(): void {
+    if (this.helper_service.is_valid_form(this.login_form)) {
+      this.authentication_service.authenticate_user(this.login_form.value).subscribe({
+        next: (response) => { console.log('response, ', response); },
+        error: (error: HttpErrorResponse) => { console.log('error, ', error) },
+        complete: () => { console.log('completed, '); }
+      })
+    }
   }
 
-  login_form_submit(): void {
-    let login_form_data: user_form_fields_interface = {
-      Email: this.login_email_ngmodel,
-      Password: this.login_password_ngmodel
-    }
-    this.validate_login_form(login_form_data);
-  }
 }
