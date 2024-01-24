@@ -16,19 +16,7 @@ export class LoginComponent {
   error_in_password: boolean = false;
   password_visible: boolean = true;
   password_visibility_switch_icon: string = 'visibility';
-
-  login_form = new FormGroup({
-    email: new FormControl("", [
-      Validators.required,
-      Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
-    ]),
-    password: new FormControl("", [
-      Validators.required,
-      Validators.minLength(6),
-      Validators.maxLength(10),
-      Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")
-    ])
-  })
+  login_form = this.helper_service.authentication_details_form;
 
   constructor(private helper_service: HelperService) { }
 
@@ -44,11 +32,11 @@ export class LoginComponent {
 
   validate_login_form(login_form_data: user_form_fields_interface): void {
     this.login_form.patchValue(Object(login_form_data));
-    if (this.login_form.controls.email.invalid) {
+    if (this.login_form.controls.Email.invalid) {
       this.error_in_email = true;
       this.helper_service.open_snack_bar('Invalid form details!');
     } else this.error_in_email = false;
-    if (this.login_form.controls.password.invalid) {
+    if (this.login_form.controls.Password.invalid) {
       this.error_in_password = true;
       this.helper_service.open_snack_bar('Invalid form details!');
     } else this.error_in_password = false;
@@ -56,8 +44,8 @@ export class LoginComponent {
 
   login_form_submit(): void {
     let login_form_data: user_form_fields_interface = {
-      email: this.login_email_ngmodel,
-      password: this.login_password_ngmodel
+      Email: this.login_email_ngmodel,
+      Password: this.login_password_ngmodel
     }
     this.validate_login_form(login_form_data);
   }
