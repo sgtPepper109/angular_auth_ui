@@ -12,7 +12,8 @@
         </ul>
       </div>
       <div>
-        <button mat-icon-button [mat-menu-trigger-for]="navbar_user_option_menu"><i class="fa fa-solid fa-circle-user"></i></button>
+        <button mat-icon-button [mat-menu-trigger-for]="navbar_user_option_menu"><i
+            class="fa fa-solid fa-circle-user"></i></button>
         <mat-menu #navbar_user_option_menu="matMenu">
           <button mat-menu-item routerLink="/login">Log in</button>
           <button mat-menu-item routerLink="/signup">Sign up</button>
@@ -22,3 +23,11 @@
   </nav>
 </div>
 <router-outlet></router-outlet>
+<nav class="navbar fixed-bottom bg-body-tertiary" aria-label="bottomNavbar">
+  <div class="container-fluid">
+    <span>Abdulrahim Shaikh {{'\u00A9'}} Copyright | All rights reserved</span>
+    <div class="d-flex">
+      Made with simple Bootstrap and Material Design
+    </div>
+  </div>
+</nav>

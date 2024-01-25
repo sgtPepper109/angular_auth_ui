@@ -3,6 +3,7 @@ import { HelperService } from 'src/app/services/helper_service/helper.service';
 import { user_form_fields_interface } from 'src/app/interfaces/all_interfaces';
 import { AuthenticationService } from 'src/app/services/authentication_service/authentication.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent {
   login_form = this.helper_service.authentication_details_form;
 
   constructor(
+    private _router: Router,
     private helper_service: HelperService,
     private authentication_service: AuthenticationService,
   ) {}
@@ -40,8 +42,14 @@ export class LoginComponent {
   login_form_submit(): void {
     if (this.helper_service.is_valid_form(this.login_form)) {
       this.authentication_service.authenticate_user(this.login_form.value).subscribe({
-        next: (response) => { console.log('response, ', response); },
-        error: (error: HttpErrorResponse) => { console.log('error, ', error) },
+        next: (response) => {
+          console.log('response: ', response);
+          this.login_form.reset();
+          this._router.navigate(['/']);
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log('error, ', error)
+        },
         complete: () => { console.log('completed, '); }
       })
     }
