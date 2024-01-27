@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HelperService } from 'src/app/services/helper_service/helper.service';
 import { user_form_fields_interface } from 'src/app/interfaces/all_interfaces';
 import { AuthenticationService } from 'src/app/services/authentication_service/authentication.service';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   password_visible: boolean = false;
   password_visibility_switch_icon: string = 'visibility';
   login_form = this.helper_service.authentication_details_form;
@@ -53,6 +53,10 @@ export class LoginComponent {
         complete: () => { console.log('completed, '); }
       })
     }
+  }
+
+  ngOnInit(): void {
+    this.login_form.reset();
   }
 
 }

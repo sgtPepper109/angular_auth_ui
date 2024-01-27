@@ -1,7 +1,7 @@
 <div class="signup-outer">
   <div class="container my-5 p-3 mb-5 rounded" style="max-width: 400px;">
     <div class="card">
-      <div class="card-header text-center text-bg-danger">
+      <div id="signupCardHeader" class="card-header text-center">
         Sign Up
       </div>
       <div class="card-body">
@@ -18,32 +18,27 @@
               <tr>
                 <div>
                   <form [formGroup]="signup_form" class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" name="email" formControlName="Email"
-                      placeholder="name@example.com">
+                    <input type="email" class="form-control" id="floatingInput" name="email" formControlName="Email" placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
-                    <div id="emailErrorIndicator" class="form-text text-danger"
-                      *ngIf="Email?.touched && Email?.invalid">* Email address is invalid</div>
-                    <div id="emailInstructionIndicator" class="form-text text-secondary" *ngIf="Email?.untouched">Enter
-                      a valid Email address</div>
+                    <div id="emailErrorIndicator" class="form-text text-danger" *ngIf="Email?.touched && Email?.invalid">* Email address is invalid</div>
+                    <div id="emailInstructionIndicator" class="form-text text-secondary" *ngIf="Email?.untouched">Enter a valid Email address</div>
+                    <div id="emailValidIndicator" class="form-text text-success" *ngIf="Email?.valid">{{'\u2714'}} Email is valid</div>
                   </form>
 
 
                   <div class="input-group">
                     <form [formGroup]="signup_form" class="form-floating">
-                      <input type="{{password_visible? 'text': 'password'}}" class="form-control" id="floatingPassword"
-                        name="password" formControlName="Password" placeholder="Password" />
+                      <input type="{{password_visible? 'text': 'password'}}" class="form-control" id="floatingPassword" name="password" formControlName="Password" placeholder="Password" />
                       <label for="floatingPassword">Password</label>
                     </form>
                     <span type="button" (click)="toggle_password_visibility()" class="input-group-text">
                       <mat-icon>{{password_visibility_switch_icon}}</mat-icon>
                     </span>
                   </div>
-                  <div id="passwordErrorIndicator" class="form-text text-danger"
-                    *ngIf="Password?.touched && Password?.invalid">* Password is invalid</div>
-                  <div id="passwordInstructionIndicator" class="form-text text-secondary" *ngIf="Password?.untouched">
-                    Enter your Password</div>
+                  <div id="passwordErrorIndicator" class="form-text text-danger" *ngIf="Password?.touched && Password?.invalid">* Password is invalid</div>
+                  <div id="passwordInstructionIndicator" class="form-text text-secondary" *ngIf="Password?.untouched"> Enter your Password</div>
+                  <div id="passwordValidIndicator" class="form-text text-secondary" *ngIf="Password?.valid">{{'\u2714'}} Password is valid</div>
                   <div id="passwordHelpBlock" class="form-text"> Your password must be 6-10 characters long, contain letters, numbers and special characters, and must not contain spaces or emojis. </div>
-
                 </div>
               </tr>
               <th>

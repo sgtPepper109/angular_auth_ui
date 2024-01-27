@@ -21,7 +21,8 @@
                     <input type="email" class="form-control" id="floatingInput" name="email" formControlName="Email" placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
                     <div id="emailErrorIndicator" class="form-text text-danger" *ngIf="Email?.touched && Email?.invalid">* Email address is invalid</div>
-                    <div id="emailInstructionIndicator" class="form-text text-secondary" *ngIf="Email?.untouched">Enter your registered Email address</div>
+                    <div id="emailInstructionIndicator" class="form-text text-secondary" *ngIf="Email?.untouched && !Email?.valid">Enter a valid Email address</div>
+                    <div id="emailValidIndicator" class="form-text text-success" *ngIf="Email?.valid">{{'\u2714'}} Email is valid</div>
                   </form>
 
 
@@ -36,7 +37,7 @@
                   </div>
                   <div id="passwordErrorIndicator" class="form-text text-danger" *ngIf="Password?.touched && Password?.invalid">* Password is invalid</div>
                   <div id="passwordInstructionIndicator" class="form-text text-secondary" *ngIf="Password?.untouched">Enter your Password</div>
-
+                  <div id="passwordValidIndicator" class="form-text text-secondary" *ngIf="Password?.valid">{{'\u2714'}} Password is valid</div>
                 </div>
               </tr>
               <th>
