@@ -3,10 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/user_authentication_components/login/login.component';
 import { SignupComponent } from './components/user_authentication_components/signup/signup.component';
+import { HomeComponent } from './components/home/home.component';
 import { ForgotPasswordComponent } from './components/user_authentication_components/forgot-password/forgot-password.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
@@ -19,7 +21,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { HomeComponent } from './components/home/home.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ButtonModule } from 'primeng/button';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,8 @@ import { HomeComponent } from './components/home/home.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule, ReactiveFormsModule,
+    HttpClientModule,
+    CommonModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -43,8 +49,10 @@ import { HomeComponent } from './components/home/home.component';
     MatInputModule,
     MatMenuModule,
     MatSnackBarModule,
-    HttpClientModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatGridListModule,
+    ButtonModule,
+    SplitButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

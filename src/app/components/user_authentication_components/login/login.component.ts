@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   password_visible: boolean = false;
   password_visibility_switch_icon: string = 'visibility';
   login_form = this.helper_service.authentication_details_form;
+  fetching_login_form_response: boolean = false;
 
   constructor(
     private _router: Router,
@@ -40,17 +41,23 @@ export class LoginComponent implements OnInit {
   }
 
   login_form_submit(): void {
+    this.fetching_login_form_response = true;
     if (this.helper_service.is_valid_form(this.login_form)) {
       this.authentication_service.authenticate_user(this.login_form.value).subscribe({
         next: (response) => {
           console.log('response: ', response);
+          this.fetching_login_form_response = false;
           this.login_form.reset();
           this._router.navigate(['/']);
         },
         error: (error: HttpErrorResponse) => {
+          this.fetching_login_form_response = false;
           console.log('error, ', error)
         },
-        complete: () => { console.log('completed, '); }
+        complete: () => {
+          this.fetching_login_form_response = false;
+          console.log('completed, ');
+        }
       })
     }
   }

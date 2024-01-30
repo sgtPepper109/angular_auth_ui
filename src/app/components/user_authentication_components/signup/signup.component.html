@@ -21,7 +21,7 @@
                     <input type="email" class="form-control" id="floatingInput" name="email" formControlName="Email" placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
                     <div id="emailErrorIndicator" class="form-text text-danger" *ngIf="Email?.touched && Email?.invalid">* Email address is invalid</div>
-                    <div id="emailInstructionIndicator" class="form-text text-secondary" *ngIf="Email?.untouched">Enter a valid Email address</div>
+                    <div id="emailInstructionIndicator" class="form-text text-secondary" *ngIf="Email?.untouched && !Email?.valid">Enter a valid Email address</div>
                     <div id="emailValidIndicator" class="form-text text-success" *ngIf="Email?.valid">{{'\u2714'}} Email is valid</div>
                   </form>
 
@@ -36,9 +36,9 @@
                     </span>
                   </div>
                   <div id="passwordErrorIndicator" class="form-text text-danger" *ngIf="Password?.touched && Password?.invalid">* Password is invalid</div>
-                  <div id="passwordInstructionIndicator" class="form-text text-secondary" *ngIf="Password?.untouched"> Enter your Password</div>
+                  <div id="passwordInstructionIndicator" class="form-text text-secondary" *ngIf="Password?.untouched && !Password?.valid">Enter your Password</div>
                   <div id="passwordValidIndicator" class="form-text text-secondary" *ngIf="Password?.valid">{{'\u2714'}} Password is valid</div>
-                  <div id="passwordHelpBlock" class="form-text"> Your password must be 6-10 characters long, contain letters, numbers and special characters, and must not contain spaces or emojis. </div>
+                  <div id="passwordHelpBlock" class="form-text text-danger"> Your password must be 6-10 characters long, contain letters (upper case and lower case), numbers and special characters, and must not contain spaces or emojis. </div>
                 </div>
               </tr>
               <th>
@@ -47,7 +47,8 @@
                 </form>
               </th>
               <tr>
-                <hr />
+                <mat-progress-bar *ngIf="!fetching_signup_form_response" mode="determinate" value="0"></mat-progress-bar>
+                <mat-progress-bar *ngIf="fetching_signup_form_response" mode="indeterminate"></mat-progress-bar>
               </tr>
               <tr>
                 <div class="text-center">
@@ -57,11 +58,9 @@
               <tr>
                 <div class="text-center">
                   <button mat-icon-button color="warn" title="Google"><i class="fa fa-brands fa-google"></i></button>
-                  <button mat-icon-button color="primary" title="Facebook/Meta"><i
-                      class="fa fa-brands fa-facebook"></i></button>
+                  <button mat-icon-button color="primary" title="Facebook/Meta"><i class="fa fa-brands fa-facebook"></i></button>
                   <button mat-icon-button title="GitHub"><i class="fa fa-brands fa-github"></i></button>
-                  <button mat-icon-button color="primary" title="LinkedIn"><i
-                      class="fa fa-brands fa-linkedin"></i></button>
+                  <button mat-icon-button color="primary" title="LinkedIn"><i class="fa fa-brands fa-linkedin"></i></button>
                 </div>
               </tr>
             </tbody>

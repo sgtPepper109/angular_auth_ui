@@ -16,6 +16,7 @@ export class SignupComponent implements OnInit {
   password_visibility_switch_icon: string = 'visibility';
   signup_form: FormGroup = this.helper_service.authentication_details_form;
   signup_success: boolean = false;
+  fetching_signup_form_response: boolean = false;
 
   constructor(
     private _router: Router,
@@ -42,16 +43,24 @@ export class SignupComponent implements OnInit {
     }
   }
   signup_form_submit(): void {
+    this.fetching_signup_form_response = true;
     if (this.helper_service.is_valid_form(this.signup_form)) {
       this.authentication_service.signup_user(this.signup_form.value).subscribe({
         next: (response) => {
+          this.fetching_signup_form_response = false;
           console.log('response, ', response);
           this.signup_form.reset();
           this.signup_success = true;
           this._router.navigate(['/login']);
         },
-        error: (error: HttpErrorResponse) => { console.log('error, ', error) },
-        complete: () => { console.log('completed, '); }
+        error: (error: HttpErrorResponse) => {
+          this.fetching_signup_form_response = false;
+          console.log('error, ', error)
+        },
+        complete: () => {
+          this.fetching_signup_form_response = false;
+          console.log('completed, ');
+        }
       })
     }
   }
