@@ -22,8 +22,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { ButtonModule } from 'primeng/button';
-import { SplitButtonModule } from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [
@@ -51,8 +49,6 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     MatSnackBarModule,
     MatProgressBarModule,
     MatGridListModule,
-    ButtonModule,
-    SplitButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

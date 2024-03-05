@@ -26,24 +26,11 @@ export class HelperService {
   })
 
   is_valid_form(_form: FormGroup): boolean {
-    if (_form.controls['Email'].invalid) {
-      // If Email is invalid
-      if (_form.controls['Password'].invalid) {
-        // If Password is also invalid (Email valid, Password valid)
+    if (_form.controls['Email'].invalid || _form.controls['Password'].invalid) {
         this.open_snack_bar('Invalid form details!');
         return false;
-      } else {
-        // If Password is valid (Email invalid, Password valid)
-        this.open_snack_bar('Invalid form details!');
-        return false;
-      }
-    } else if (_form.controls['Password'].invalid) {
-      // If Password is invalid (Email valid, Password invalid)
-      this.open_snack_bar('Invalid form details!');
-      return false;
-    } else {
-      return true;
     }
+    return true;
   }
 
   open_snack_bar(message: string): void {
